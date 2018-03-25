@@ -1,0 +1,22 @@
+{
+  "name": "metabot-example-echo",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "git@github.com:nyamadori/metabot-example-echo.git",
+  "author": "nyamadori <nyamadorig@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "metabot-bot": "nyamadori/metabot-bot"
+  },
+  "devDependencies": {
+    "ts-loader": "^4.1.0",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2",
+    "webpack": "^4.2.0",
+    "webpack-cli": "^2.0.13"
+  },
+  "scripts": {
+    "build": "yarn run webpack"
+  }
+}
