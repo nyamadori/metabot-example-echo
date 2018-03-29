@@ -4,6 +4,7 @@
     "esModuleInterop": true,
     "alwaysStrict": true,
     "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
     "declaration": true,
     "module": "commonjs",
     "moduleResolution": "node",
