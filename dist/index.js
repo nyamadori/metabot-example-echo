@@ -8982,7 +8982,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.command = '<command> <message>';
+exports.command = 'echo <message>';
 exports.desc = 'Echos your message';
 function handler(_a) {
     var args = _a.args, context = _a.context;
