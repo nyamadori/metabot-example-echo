@@ -7,7 +7,7 @@
   "author": "nyamadori <nyamadorig@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "metabot-bot": "nyamadori/metabot-bot"
+    "metabot-bot": "latest"
   },
   "devDependencies": {
     "ts-loader": "^4.1.0",
