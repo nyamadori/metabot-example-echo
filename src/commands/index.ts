@@ -6,9 +6,8 @@ export class EchoCommand extends CommandBase {
   message: string
 
   async execute(env: CommandEnvironment) {
-    console.log(env)
     return {
-      text: env.message.text
+      text: this.message
     }
   }
 }
