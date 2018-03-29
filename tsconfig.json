@@ -5,6 +5,7 @@
     "alwaysStrict": true,
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "declaration": true,
     "module": "commonjs",
     "moduleResolution": "node",
