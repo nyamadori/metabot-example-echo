@@ -1,1 +1,1 @@
-export { bot } from './bot';
+export { commandParser } from './commandParser';
