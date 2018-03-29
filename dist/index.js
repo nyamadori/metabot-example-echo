@@ -106,7 +106,7 @@ var BotExector = (function () {
         return new Promise(function (resolve, reject) {
             _this.yargs(rootCommand).parse(command, function (err, parsedArgs, output) {
                 if (err || output) {
-                    return resolve(_this.buildMessageForCmdHelp(rootCommand, command, output));
+                    return resolve(_this.buildMessageForCmdHelp(command, output));
                 }
                 var commandPath = parsedArgs._;
                 var commandDef = _this.commandDefinitionFrom(commandPath);
@@ -169,9 +169,9 @@ var BotExector = (function () {
         });
         return base;
     };
-    BotExector.prototype.buildMessageForCmdHelp = function (rootCommand, restCommand, message) {
+    BotExector.prototype.buildMessageForCmdHelp = function (command, message) {
         return {
-            text: rootCommand + " " + restCommand,
+            text: "" + command,
             attachments: [
                 {
                     text: "```" + message + "```"
