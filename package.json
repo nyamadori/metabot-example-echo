@@ -8,7 +8,7 @@
   "author": "nyamadori <nyamadorig@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "metabot-bot": "^0.0.5"
+    "metabot-bot": "^0.0.6"
   },
   "devDependencies": {
     "ts-loader": "^4.1.0",
