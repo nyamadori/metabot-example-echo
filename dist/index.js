@@ -96,11 +96,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 var yargs = __importStar(__webpack_require__(/*! yargs */ "./node_modules/yargs/dist/index.js"));
-var Exector = (function () {
-    function Exector(definition) {
+var BotExector = (function () {
+    function BotExector(definition) {
         this.definition = definition;
     }
-    Exector.prototype.execute = function (context) {
+    BotExector.prototype.execute = function (context) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             var messageText = context.message['text'];
@@ -117,7 +117,7 @@ var Exector = (function () {
             });
         });
     };
-    Exector.prototype.commandDefinitionFrom = function (commandPath) {
+    BotExector.prototype.commandDefinitionFrom = function (commandPath) {
         var commands = this.definition.commands;
         var currentCommand = null;
         commandPath.forEach(function (cmd) {
@@ -126,7 +126,7 @@ var Exector = (function () {
         });
         return currentCommand;
     };
-    Exector.prototype.toYargsCommandModule = function (def) {
+    BotExector.prototype.toYargsCommandModule = function (def) {
         var _this = this;
         var commandModule = {
             describe: def.desc,
@@ -153,7 +153,7 @@ var Exector = (function () {
         };
         return commandModule;
     };
-    Exector.prototype.yargs = function () {
+    BotExector.prototype.yargs = function () {
         var _this = this;
         var base = yargs
             .strict()
@@ -168,7 +168,7 @@ var Exector = (function () {
         });
         return base;
     };
-    Exector.prototype.buildMessageForCmdHelp = function (cmd, message) {
+    BotExector.prototype.buildMessageForCmdHelp = function (cmd, message) {
         return {
             text: "/meta " + cmd,
             attachments: [
@@ -178,9 +178,9 @@ var Exector = (function () {
             ]
         };
     };
-    return Exector;
+    return BotExector;
 }());
-exports.default = Exector;
+exports.BotExector = BotExector;
 
 
 /***/ }),
@@ -194,13 +194,10 @@ exports.default = Exector;
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-}
 Object.defineProperty(exports, "__esModule", { value: true });
-var BotExector_1 = __importDefault(__webpack_require__(/*! ./BotExector */ "./node_modules/metabot-bot/dist/BotExector.js"));
+var BotExector_1 = __webpack_require__(/*! ./BotExector */ "./node_modules/metabot-bot/dist/BotExector.js");
 function defineBot(definition) {
-    return new BotExector_1.default(definition);
+    return new BotExector_1.BotExector(definition);
 }
 exports.defineBot = defineBot;
 
@@ -219,6 +216,8 @@ exports.defineBot = defineBot;
 Object.defineProperty(exports, "__esModule", { value: true });
 var defineBot_1 = __webpack_require__(/*! ./defineBot */ "./node_modules/metabot-bot/dist/defineBot.js");
 exports.defineBot = defineBot_1.defineBot;
+var BotExector_1 = __webpack_require__(/*! ./BotExector */ "./node_modules/metabot-bot/dist/BotExector.js");
+exports.BotExector = BotExector_1.BotExector;
 
 
 /***/ }),
@@ -8913,6 +8912,32 @@ module.exports = __webpack_require__(/*! util */ "util");
 
 /***/ }),
 
+/***/ "./src/bot.ts":
+/*!********************!*\
+  !*** ./src/bot.ts ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+var metabot = __importStar(__webpack_require__(/*! metabot-bot */ "./node_modules/metabot-bot/dist/index.js"));
+var echo = __importStar(__webpack_require__(/*! ./commands/echo */ "./src/commands/echo.ts"));
+exports.bot = metabot.defineBot({
+    commands: { echo: echo }
+});
+
+
+/***/ }),
+
 /***/ "./src/commands/echo.ts":
 /*!******************************!*\
   !*** ./src/commands/echo.ts ***!
@@ -8985,19 +9010,9 @@ exports.handler = handler;
 
 "use strict";
 
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-}
 Object.defineProperty(exports, "__esModule", { value: true });
-var metabot = __importStar(__webpack_require__(/*! metabot-bot */ "./node_modules/metabot-bot/dist/index.js"));
-var echo = __importStar(__webpack_require__(/*! ./commands/echo */ "./src/commands/echo.ts"));
-metabot.defineBot({
-    commands: { echo: echo }
-});
+var bot_1 = __webpack_require__(/*! ./bot */ "./src/bot.ts");
+exports.bot = bot_1.bot;
 
 
 /***/ }),
