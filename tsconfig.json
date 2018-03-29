@@ -14,7 +14,7 @@
     "noImplicitReturns": true,
     "noUnusedParameters": false,
     "noUnusedLocals": false,
-    "outDir": "./dist",
+    "outDir": "./",
     "removeComments": true,
     "strictNullChecks": false,
     "target": "es5",
