@@ -102,12 +102,11 @@ var BotExector = (function () {
     }
     BotExector.prototype.execute = function (command, context) {
         var _this = this;
-        var cmdStr = command.join(' ');
-        var rootCommand = command[0];
+        var rootCommand = command.split(/\s+/)[0];
         return new Promise(function (resolve, reject) {
-            _this.yargs(rootCommand).parse(cmdStr, function (err, parsedArgs, output) {
+            _this.yargs(rootCommand).parse(command, function (err, parsedArgs, output) {
                 if (err || output) {
-                    return resolve(_this.buildMessageForCmdHelp(rootCommand, cmdStr, output));
+                    return resolve(_this.buildMessageForCmdHelp(rootCommand, command, output));
                 }
                 var commandPath = parsedArgs._;
                 var commandDef = _this.commandDefinitionFrom(commandPath);
@@ -122,8 +121,8 @@ var BotExector = (function () {
         var commands = this.definition.commands;
         var currentCommand = commands['root'];
         commandPath.slice(1).forEach(function (cmd) {
-            currentCommand = commands[cmd];
             commands = currentCommand.subcommands;
+            currentCommand = commands[cmd];
         });
         return currentCommand;
     };
