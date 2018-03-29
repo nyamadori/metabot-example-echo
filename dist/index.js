@@ -102,10 +102,12 @@ var BotExector = (function () {
     }
     BotExector.prototype.execute = function (command, context) {
         var _this = this;
+        var cmdStr = command.join(' ');
+        var rootCommand = command[0];
         return new Promise(function (resolve, reject) {
-            _this.yargs().parse(command, function (err, parsedArgs, output) {
+            _this.yargs(rootCommand).parse(cmdStr, function (err, parsedArgs, output) {
                 if (err || output) {
-                    return resolve(_this.buildMessageForCmdHelp(command, output));
+                    return resolve(_this.buildMessageForCmdHelp(rootCommand, cmdStr, output));
                 }
                 var commandPath = parsedArgs._;
                 var commandDef = _this.commandDefinitionFrom(commandPath);
@@ -118,22 +120,23 @@ var BotExector = (function () {
     };
     BotExector.prototype.commandDefinitionFrom = function (commandPath) {
         var commands = this.definition.commands;
-        var currentCommand = null;
-        commandPath.forEach(function (cmd) {
+        var currentCommand = commands['root'];
+        commandPath.slice(1).forEach(function (cmd) {
             currentCommand = commands[cmd];
             commands = currentCommand.subcommands;
         });
         return currentCommand;
     };
-    BotExector.prototype.toYargsCommandModule = function (def) {
+    BotExector.prototype.toYargsCommandModule = function (rootCommand, def) {
         var _this = this;
+        var command = def.command.replace('%{botNickname}', rootCommand);
         var commandModule = {
             describe: def.desc,
-            command: def.command,
+            command: command,
             builder: function (yargs) {
                 if (def.subcommands) {
                     Object.keys(def.subcommands).forEach(function (cmd) {
-                        yargs.command(_this.toYargsCommandModule(def.subcommands[cmd]));
+                        yargs.command(_this.toYargsCommandModule(rootCommand, def.subcommands[cmd]));
                     });
                 }
                 if (def.params) {
@@ -152,7 +155,7 @@ var BotExector = (function () {
         };
         return commandModule;
     };
-    BotExector.prototype.yargs = function () {
+    BotExector.prototype.yargs = function (rootCommand) {
         var _this = this;
         var base = yargs
             .strict()
@@ -162,14 +165,14 @@ var BotExector = (function () {
             .showHelpOnFail(false)
             .wrap(72);
         Object.keys(this.definition.commands).forEach(function (cmd) {
-            var cmdDef = _this.toYargsCommandModule(_this.definition.commands[cmd]);
+            var cmdDef = _this.toYargsCommandModule(rootCommand, _this.definition.commands[cmd]);
             base.command(cmdDef);
         });
         return base;
     };
-    BotExector.prototype.buildMessageForCmdHelp = function (cmd, message) {
+    BotExector.prototype.buildMessageForCmdHelp = function (rootCommand, restCommand, message) {
         return {
-            text: "/meta " + cmd,
+            text: rootCommand + " " + restCommand,
             attachments: [
                 {
                     text: "```" + message + "```"
@@ -8929,17 +8932,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 var metabot = __importStar(__webpack_require__(/*! metabot-bot */ "./node_modules/metabot-bot/dist/index.js"));
-var echo = __importStar(__webpack_require__(/*! ./commands/echo */ "./src/commands/echo.ts"));
+var root = __importStar(__webpack_require__(/*! ./commands/root */ "./src/commands/root.ts"));
 exports.bot = metabot.defineBot({
-    commands: { echo: echo }
+    commands: { root: root }
 });
 
 
 /***/ }),
 
-/***/ "./src/commands/echo.ts":
+/***/ "./src/commands/root.ts":
 /*!******************************!*\
-  !*** ./src/commands/echo.ts ***!
+  !*** ./src/commands/root.ts ***!
   \******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -8982,7 +8985,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.command = '<nickname> <message>';
+exports.command = '%{botNickname} <message>';
 exports.desc = 'Echos your message';
 function handler(_a) {
     var args = _a.args, context = _a.context;

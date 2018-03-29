@@ -1,6 +1,6 @@
 import * as metabot from 'metabot-bot'
-import * as echo from './commands/echo'
+import * as root from './commands/root'
 
 export const bot = metabot.defineBot({
-  commands: { echo }
+  commands: { root }
 })
