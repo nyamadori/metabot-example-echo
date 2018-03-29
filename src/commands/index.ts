@@ -26,6 +26,7 @@ export class IncrementCommand extends CommandBase {
 
 @Command('$nickname <command> [args..]', 'Show command examples')
 @SubCommand('echo', EchoCommand)
+@SubCommand('inc', IncrementCommand)
 export class RootCommand extends CommandBase {
   command: string
 }

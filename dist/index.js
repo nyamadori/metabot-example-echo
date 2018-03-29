@@ -10255,7 +10255,8 @@ var RootCommand = (function (_super) {
     }
     RootCommand = __decorate([
         metabot_bot_1.Command('$nickname <command> [args..]', 'Show command examples'),
-        metabot_bot_1.SubCommand('echo', EchoCommand)
+        metabot_bot_1.SubCommand('echo', EchoCommand),
+        metabot_bot_1.SubCommand('inc', IncrementCommand)
     ], RootCommand);
     return RootCommand;
 }(metabot_bot_1.CommandBase));
