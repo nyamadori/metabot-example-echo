@@ -100,13 +100,12 @@ var BotExector = (function () {
     function BotExector(definition) {
         this.definition = definition;
     }
-    BotExector.prototype.execute = function (context) {
+    BotExector.prototype.execute = function (command, context) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            var messageText = context.message['text'];
-            _this.yargs().parse(messageText, function (err, parsedArgs, output) {
+            _this.yargs().parse(command, function (err, parsedArgs, output) {
                 if (err || output) {
-                    return resolve(_this.buildMessageForCmdHelp(messageText, output));
+                    return resolve(_this.buildMessageForCmdHelp(command, output));
                 }
                 var commandPath = parsedArgs._;
                 var commandDef = _this.commandDefinitionFrom(commandPath);
@@ -8983,7 +8982,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.command = 'echo <message>';
+exports.command = '<nickname> <message>';
 exports.desc = 'Echos your message';
 function handler(_a) {
     var args = _a.args, context = _a.context;
