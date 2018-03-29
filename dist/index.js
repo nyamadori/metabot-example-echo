@@ -10234,6 +10234,8 @@ var IncrementCommand = (function (_super) {
     IncrementCommand.prototype.execute = function (env) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
+                if (env.brain['counter'] === undefined || env.brain['counter'] === null)
+                    env.brain['counter'] = 0;
                 env.brain['counter'] += 1;
                 return [2, {
                         text: env.brain['counter']

@@ -16,6 +16,8 @@ export class EchoCommand extends CommandBase {
 @Transactional
 export class IncrementCommand extends CommandBase {
   async execute(env: CommandEnvironment) {
+    if (env.brain['counter'] === undefined || env.brain['counter'] === null) env.brain['counter'] = 0
+
     env.brain['counter'] += 1
 
     return {
