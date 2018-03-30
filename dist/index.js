@@ -10250,6 +10250,33 @@ var IncrementCommand = (function (_super) {
     return IncrementCommand;
 }(metabot_bot_1.CommandBase));
 exports.IncrementCommand = IncrementCommand;
+var AddTodoCommand = (function (_super) {
+    __extends(AddTodoCommand, _super);
+    function AddTodoCommand() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    AddTodoCommand.prototype.execute = function (env) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                if (!env.brain['todos'])
+                    env.brain['todos'] = [];
+                env.brain['todos'].push(this.todo);
+                return [2, {
+                        text: env.brain['todos'].join("\n")
+                    }];
+            });
+        });
+    };
+    __decorate([
+        metabot_bot_1.Positional('your message'),
+        __metadata("design:type", String)
+    ], AddTodoCommand.prototype, "todo", void 0);
+    AddTodoCommand = __decorate([
+        metabot_bot_1.Command('addtodo <todo>', 'Increment counter')
+    ], AddTodoCommand);
+    return AddTodoCommand;
+}(metabot_bot_1.CommandBase));
+exports.AddTodoCommand = AddTodoCommand;
 var RootCommand = (function (_super) {
     __extends(RootCommand, _super);
     function RootCommand() {
@@ -10258,7 +10285,8 @@ var RootCommand = (function (_super) {
     RootCommand = __decorate([
         metabot_bot_1.Command('$nickname <command> [args..]', 'Show command examples'),
         metabot_bot_1.SubCommand('echo', EchoCommand),
-        metabot_bot_1.SubCommand('inc', IncrementCommand)
+        metabot_bot_1.SubCommand('inc', IncrementCommand),
+        metabot_bot_1.SubCommand('addtodo', AddTodoCommand)
     ], RootCommand);
     return RootCommand;
 }(metabot_bot_1.CommandBase));

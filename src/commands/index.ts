@@ -26,9 +26,26 @@ export class IncrementCommand extends CommandBase {
   }
 }
 
+@Command('addtodo <todo>', 'Increment counter')
+export class AddTodoCommand extends CommandBase {
+  @Positional('your message')
+  todo: string
+
+  async execute(env: CommandEnvironment) {
+    if (!env.brain['todos']) env.brain['todos'] = []
+
+    env.brain['todos'].push(this.todo)
+
+    return {
+      text: env.brain['todos'].join("\n")
+    }
+  }
+}
+
 @Command('$nickname <command> [args..]', 'Show command examples')
 @SubCommand('echo', EchoCommand)
 @SubCommand('inc', IncrementCommand)
+@SubCommand('addtodo', AddTodoCommand)
 export class RootCommand extends CommandBase {
   command: string
 }

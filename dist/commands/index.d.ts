@@ -10,6 +10,12 @@ export declare class IncrementCommand extends CommandBase {
         text: any;
     }>;
 }
+export declare class AddTodoCommand extends CommandBase {
+    todo: string;
+    execute(env: CommandEnvironment): Promise<{
+        text: any;
+    }>;
+}
 export declare class RootCommand extends CommandBase {
     command: string;
 }
